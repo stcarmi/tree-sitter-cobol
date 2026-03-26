@@ -1,5 +1,5 @@
 [package]
-name = "tree-sitter-COBOL"
+name = "tree-sitter-cobol"
 description = "COBOL grammar for the tree-sitter parsing library"
 version = "0.0.1"
 keywords = ["incremental", "parsing", "COBOL"]
