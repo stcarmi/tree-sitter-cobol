@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "version": "0.0.1",
+    "links": {
+      "repository": "https://github.com/stcarmi/tree-sitter-cobol"
+    }
+  },
+  "grammars": [
+    {
+      "name": "cobol",
+      "camelCase": false,
+      "scope": "source.cobol",
+      "path": ".",
+      "file-types": ["cob", "cbl", "cobol", "cpy"]
+    }
+  ]
+}
