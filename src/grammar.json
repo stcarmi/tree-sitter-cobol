@@ -7170,6 +7170,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "exec_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "next_sentence_statement"
         }
       ]
@@ -7345,6 +7349,43 @@
         {
           "type": "SYMBOL",
           "name": "else_header"
+        }
+      ]
+    },
+    "exec_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_EXEC"
+        },
+        {
+          "type": "FIELD",
+          "name": "language",
+          "content": {
+            "type": "SYMBOL",
+            "name": "WORD"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "content",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "exec_content"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_END_EXEC"
         }
       ]
     },
@@ -16798,6 +16839,14 @@
       "type": "PATTERN",
       "value": "[eE][xX][cC][lL][uU][sS][iI][vV][eE]"
     },
+    "_EXEC": {
+      "type": "PATTERN",
+      "value": "[eE][xX][eE][cC]"
+    },
+    "_END_EXEC": {
+      "type": "PATTERN",
+      "value": "[eE][nN][dD]-[eE][xX][eE][cC]"
+    },
     "_EXIT": {
       "type": "PATTERN",
       "value": "[eE][xX][iI][tT]"
@@ -19250,6 +19299,10 @@
     {
       "type": "SYMBOL",
       "name": "_multiline_string"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "exec_content"
     }
   ],
   "inline": [],

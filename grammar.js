@@ -19,6 +19,7 @@ module.exports = grammar({
     $._LINE_COMMENT,
     $.comment_entry,
     $._multiline_string,
+    $.exec_content,
   ],
 
   extras: $ => [
@@ -1400,6 +1401,7 @@ module.exports = grammar({
       $.unstring_statement,
       $.use_statement,
       $.write_statement,
+      $.exec_statement,
       $.next_sentence_statement,
     ),
 
@@ -1450,6 +1452,13 @@ module.exports = grammar({
       $.if_header,
       $.else_if_header,
       $.else_header,
+    ),
+
+    exec_statement: $ => seq(
+      $._EXEC,
+      field('language', $.WORD),
+      field('content', optional($.exec_content)),
+      $._END_EXEC,
     ),
 
     copy_statement: $ => seq(
@@ -2993,6 +3002,8 @@ module.exports = grammar({
     _EVENT_STATUS: $ => /[eE][vV][eE][nN][tT]-[sS][tT][aA][tT][uU][sS]/,
     _EXCEPTION: $ => /[eE][xX][cC][eE][pP][tT][iI][oO][nN]/,
     _EXCLUSIVE: $ => /[eE][xX][cC][lL][uU][sS][iI][vV][eE]/,
+    _EXEC: $ => /[eE][xX][eE][cC]/,
+    _END_EXEC: $ => /[eE][nN][dD]-[eE][xX][eE][cC]/,
     _EXIT: $ => /[eE][xX][iI][tT]/,
     _EXTEND: $ => /[eE][xX][tT][eE][nN][dD]/,
     _EXTERNAL: $ => /[eE][xX][tT][eE][rR][nN][aA][lL]/,
