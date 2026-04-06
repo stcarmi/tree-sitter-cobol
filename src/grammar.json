@@ -7378,6 +7378,14 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "exec_host_variable"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "exec_sql_identifier"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "WORD"
               },
               {
@@ -7390,7 +7398,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "[(),:;=<>!*+\\-\\/\\.&]"
+                "value": "[(),:;=<>!*+\\-\\/\\.&_@#\\?\\|]"
               }
             ]
           }
@@ -7400,6 +7408,14 @@
           "name": "_END_EXEC"
         }
       ]
+    },
+    "exec_sql_identifier": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z][a-zA-Z0-9]*_[a-zA-Z0-9_]*"
+    },
+    "exec_host_variable": {
+      "type": "PATTERN",
+      "value": ":[a-zA-Z][a-zA-Z0-9-]*"
     },
     "exec_sql_keyword": {
       "type": "CHOICE",

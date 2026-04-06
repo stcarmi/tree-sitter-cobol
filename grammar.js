@@ -1458,13 +1458,23 @@ module.exports = grammar({
       field('language', $.WORD),
       repeat(choice(
         $.exec_sql_keyword,
+        $.exec_host_variable,
+        $.exec_sql_identifier,
         $.WORD,
         $.string,
         $.number,
-        /[(),:;=<>!*+\-\/\.&]/,
+        /[(),:;=<>!*+\-\/\.&_@#\?\|]/,
       )),
       $._END_EXEC,
     ),
+
+    // SQL identifier containing underscores (DB2 table/column names like CUST_ID)
+    // Only matches words with at least one underscore, so pure-alpha words
+    // fall through to exec_sql_keyword or WORD
+    exec_sql_identifier: $ => /[a-zA-Z][a-zA-Z0-9]*_[a-zA-Z0-9_]*/,
+
+    // Host variable reference (:WS-NAME)
+    exec_host_variable: $ => /:[a-zA-Z][a-zA-Z0-9-]*/,
 
     // 274 SQL + CICS keywords (case-insensitive)
     exec_sql_keyword: $ => choice(

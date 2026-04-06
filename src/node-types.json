@@ -4519,6 +4519,14 @@
           "named": true
         },
         {
+          "type": "exec_host_variable",
+          "named": true
+        },
+        {
+          "type": "exec_sql_identifier",
+          "named": true
+        },
+        {
           "type": "exec_sql_keyword",
           "named": true
         },
@@ -14603,6 +14611,14 @@
   },
   {
     "type": "error",
+    "named": true
+  },
+  {
+    "type": "exec_host_variable",
+    "named": true
+  },
+  {
+    "type": "exec_sql_identifier",
     "named": true
   },
   {
