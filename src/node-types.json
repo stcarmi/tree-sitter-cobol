@@ -4491,19 +4491,14 @@
     }
   },
   {
+    "type": "exec_sql_keyword",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "exec_statement",
     "named": true,
     "fields": {
-      "content": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "exec_content",
-            "named": true
-          }
-        ]
-      },
       "language": {
         "multiple": false,
         "required": true,
@@ -4514,6 +4509,28 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "WORD",
+          "named": true
+        },
+        {
+          "type": "exec_sql_keyword",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -7042,7 +7059,7 @@
     "named": true,
     "fields": {
       "lock_with": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -14586,10 +14603,6 @@
   },
   {
     "type": "error",
-    "named": true
-  },
-  {
-    "type": "exec_content",
     "named": true
   },
   {

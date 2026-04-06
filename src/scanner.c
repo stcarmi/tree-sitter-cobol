@@ -8,7 +8,6 @@ enum TokenType {
     LINE_COMMENT,
     COMMENT_ENTRY,
     multiline_string,
-    exec_content,
 };
 
 void *tree_sitter_cobol_external_scanner_create() {
@@ -151,90 +150,6 @@ bool tree_sitter_cobol_external_scanner_scan(void *payload, TSLexer *lexer,
         } else {
             return false;
         }
-    }
-
-    if(valid_symbols[exec_content]) {
-        // Capture everything until END-EXEC
-        // We match case-insensitively: END-EXEC
-        const char *end_exec = "end-exec";
-        bool has_content = false;
-
-        while(lexer->lookahead != 0) {
-            // Skip whitespace between tokens
-            while(is_white_space(lexer->lookahead) || lexer->lookahead == '\n') {
-                lexer->advance(lexer, false);
-            }
-
-            // Skip line prefix (columns 1-6) at start of new lines
-            if(lexer->get_column(lexer) <= 5) {
-                while(lexer->get_column(lexer) <= 5 && lexer->lookahead != 0 && lexer->lookahead != '\n') {
-                    lexer->advance(lexer, false);
-                }
-                // Skip column 7 (indicator area)
-                if(lexer->lookahead != 0 && lexer->lookahead != '\n') {
-                    // Check for comment line
-                    if(lexer->lookahead == '*' || lexer->lookahead == '/') {
-                        while(lexer->lookahead != '\n' && lexer->lookahead != 0) {
-                            lexer->advance(lexer, false);
-                        }
-                        continue;
-                    }
-                    lexer->advance(lexer, false);
-                }
-                continue;
-            }
-
-            // Check for END-EXEC at current position
-            const char *p = end_exec;
-            bool match = true;
-            // Save position to check
-            int col_start = lexer->get_column(lexer);
-
-            // Peek ahead for END-EXEC (case insensitive)
-            // We need to check without consuming if it's END-EXEC
-            if(towlower(lexer->lookahead) == 'e') {
-                // Potential END-EXEC match - mark current position as end of content
-                lexer->mark_end(lexer);
-
-                match = true;
-                p = end_exec;
-                while(*p != 0) {
-                    if(towlower(lexer->lookahead) != *p) {
-                        match = false;
-                        break;
-                    }
-                    lexer->advance(lexer, false);
-                    p++;
-                }
-
-                if(match && (*p == 0)) {
-                    // Check that END-EXEC is followed by whitespace, period, or EOF
-                    char next = lexer->lookahead;
-                    if(next == 0 || next == '\n' || next == ' ' || next == '.' || next == '\t') {
-                        // Found END-EXEC — return the content before it
-                        lexer->result_symbol = exec_content;
-                        return has_content;
-                    }
-                }
-                // Not END-EXEC, content continues
-                has_content = true;
-                continue;
-            }
-
-            // Skip suffix area (column 72+)
-            if(lexer->get_column(lexer) >= 72) {
-                while(lexer->lookahead != '\n' && lexer->lookahead != 0) {
-                    lexer->advance(lexer, false);
-                }
-                continue;
-            }
-
-            // Regular content character
-            has_content = true;
-            lexer->advance(lexer, false);
-        }
-
-        return false;
     }
 
     if(valid_symbols[multiline_string]) {
