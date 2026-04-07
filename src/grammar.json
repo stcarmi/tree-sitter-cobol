@@ -20395,6 +20395,10 @@
     },
     {
       "type": "SYMBOL",
+      "name": "exec_statement"
+    },
+    {
+      "type": "SYMBOL",
       "name": "comment"
     }
   ],

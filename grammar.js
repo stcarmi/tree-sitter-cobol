@@ -28,6 +28,7 @@ module.exports = grammar({
     $._LINE_COMMENT,
     $._LINE_COMMENT_ALIAS,
     $.copy_statement,
+    $.exec_statement,
     $.comment,
   ],
 
